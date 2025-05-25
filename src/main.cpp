@@ -1,5 +1,7 @@
 #include <iostream>
-#include "App/App.h"
+#include "App.h"
+
+#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 
 int main()
 {

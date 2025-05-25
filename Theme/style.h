@@ -5,7 +5,7 @@
 
 namespace setStyle
 {
-    void Nord();
+    void GruvBox_Dark();
 } 
 
 

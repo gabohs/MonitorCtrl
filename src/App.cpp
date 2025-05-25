@@ -1,9 +1,9 @@
 #include "App.h"
 
+#include "../Theme/Font/JETBRAINSMONONL-BOLD.h"
+
 App::App() : window_(nullptr) 
-{
-    menuSize.x = 500;
-    menuSize.y = 310;
+{ 
 }
 
 App::~App() 
@@ -37,9 +37,15 @@ bool App::initializeGLFW()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);              // hide window border/title
-    glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE); // make glw window transparent
+    glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE); // make glfw window transparent
 
-    window_ = glfwCreateWindow(1280, 700, "ImGui Example", nullptr, nullptr);
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+    const int width  = mode->width - 1;
+    const int height = mode->height - 1;
+
+    window_ = glfwCreateWindow(width, height, "MonitorCtrl", nullptr, nullptr);
 
     if (!window_) 
     {
@@ -62,7 +68,12 @@ bool App::initializeImGui()
 
     ImGui::StyleColorsDark();
 
-    io.Fonts->AddFontFromFileTTF("src/App/Theme/Font/JETBRAINSMONONL-BOLD.TTF", 15.f);
+    ImFontConfig font_cfg;
+    font_cfg.FontDataOwnedByAtlas = false;
+
+    io.Fonts->AddFontFromMemoryTTF(JetBrainsMonoNL, FontSize, 15.0f, &font_cfg);
+
+
     if (!ImGui_ImplGlfw_InitForOpenGL(window_, true)) 
     {
         std::cerr << "Failed to initialize ImGui GLFW backend" << std::endl;
@@ -77,7 +88,8 @@ bool App::initializeImGui()
 }
 
 void App::run() 
-{
+{   
+    setStyle::GruvBox_Dark();
     while (!glfwWindowShouldClose(window_)) 
     {
         glfwPollEvents();
@@ -88,7 +100,14 @@ void App::run()
         ImGui::NewFrame();
 
         // Render UI
-        renderUI();
+        if (gui.shouldRender())
+        {
+            gui.render();
+        }
+        else
+        {
+            glfwSetWindowShouldClose(window_, true);
+        }
 
         // Render
         ImGui::Render();
