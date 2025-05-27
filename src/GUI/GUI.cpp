@@ -129,7 +129,7 @@ void GUI::restoringOptions()
 
     if (ImGui::SmallButton("Restore colors"))
     {
-        monitorCtrl.restoreColorDefauls();
+        monitorCtrl.restoreColorDefaults();
     }
 
     ImGui::PopStyleColor();
@@ -172,10 +172,28 @@ bool GUI::shouldRender()
     return shouldRender_;
 }
 
+ImVec2 GUI::getWindowPos()
+{   
+    return lastWindowPos_;
+}
+
+ImVec2 GUI::getWindowSize()
+{
+    return lastWindowSize_;
+}
+
+ImVec2 GUI::getMousePos()
+{
+    return ImGui::GetMousePos();
+}
+
 void GUI::render()
 {
     ImGui::SetNextWindowSize(ImVec2(250, 200), ImGuiCond_Once);
     ImGui::Begin("MonitorCtrl", nullptr, ImGuiWindowFlags_NoTitleBar);
+
+    lastWindowPos_ = ImGui::GetWindowPos();
+    lastWindowSize_ = ImGui::GetWindowSize();
 
     renderCustomCloseButton();
 
@@ -184,6 +202,7 @@ void GUI::render()
         if (ImGui::BeginTabItem("Controls"))
         {
             ControlsTab();
+            ImGui::Text("Number of monitors: %d", monitorCtrl.getMonitorCount());
             ImGui::EndTabItem();
         }
 

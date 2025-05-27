@@ -25,12 +25,13 @@ public:
     ~MonitorCtrl();
 
     void getMonitorInfo();
+    DWORD getMonitorCount();
 
     void setBrightness(DWORD value);
     void setContrast(DWORD value);
 
     void restoreFactoryDefaults();
-    void restoreColorDefauls();
+    void restoreColorDefaults();
 
     void turnOn();
     void turnOff();

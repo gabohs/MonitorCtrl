@@ -22,6 +22,15 @@ void MonitorCtrl::getMonitorInfo()
         GetMonitorBrightness(pMons_[0].hPhysicalMonitor, &specs_.minBrightness, &specs_.curBrightness, &specs_.maxBrightness);
         GetMonitorContrast(pMons_[0].hPhysicalMonitor, &specs_.minContrast, &specs_.curContrast, &specs_.maxContrast);            
     }
+    else
+    {
+        MessageBox(NULL, TEXT("Failed to get Physical Monitor."), TEXT("Error"), MB_OK | MB_ICONERROR);
+    }
+}
+
+DWORD MonitorCtrl::getMonitorCount()
+{
+    return monitorCount_;
 }
 
 void MonitorCtrl::setBrightness(DWORD value)
@@ -34,6 +43,7 @@ void MonitorCtrl::setBrightness(DWORD value)
     else
     {
         specs_.curContrast = value;
+        
     }
 }
 
@@ -56,7 +66,7 @@ void MonitorCtrl::restoreFactoryDefaults()
     RestoreMonitorFactoryDefaults(pMons_[0].hPhysicalMonitor);
 }
 
-void MonitorCtrl::restoreColorDefauls()
+void MonitorCtrl::restoreColorDefaults()
 {
     RestoreMonitorFactoryColorDefaults(pMons_[0].hPhysicalMonitor);
 }

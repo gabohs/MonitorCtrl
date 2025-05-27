@@ -4,11 +4,11 @@
 
 struct MonitorSpecs
 {
-    DWORD minBrightness;
-    DWORD maxBrightness;
-    DWORD curBrightness;
+    DWORD minBrightness = 0;
+    DWORD maxBrightness = 100;
+    DWORD curBrightness = 0;
 
-    DWORD minContrast;
-    DWORD maxContrast;
-    DWORD curContrast;
+    DWORD minContrast = 0;
+    DWORD maxContrast = 100;
+    DWORD curContrast = 0;
 };

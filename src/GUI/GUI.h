@@ -3,12 +3,17 @@
 #include "../MonitorControl/MonitorCtrl.h"
 #include "../MonitorControl/MonitorSpecs.h"
 
+#include <imgui.h>
+
 
 class GUI
 {
 private:
     MonitorCtrl monitorCtrl;
     MonitorSpecs specs_;
+
+    ImVec2 lastWindowPos_;
+    ImVec2 lastWindowSize_;
 
     bool shouldRender_ = true;
 
@@ -27,6 +32,9 @@ public:
     GUI();
     bool shouldRender();
 
-    void render();
+    ImVec2 getWindowPos();
+    ImVec2 getWindowSize();
+    ImVec2 getMousePos();
 
+    void render();
 };

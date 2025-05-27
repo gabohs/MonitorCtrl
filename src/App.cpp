@@ -101,8 +101,9 @@ void App::run()
 
         // Render UI
         if (gui.shouldRender())
-        {
+        {   
             gui.render();
+            hideIfUnfocused();
         }
         else
         {
@@ -138,3 +139,15 @@ void App::shutdown()
     glfwTerminate();
 }
 
+void App::hideIfUnfocused()
+{   
+    if (!window_ || glfwGetWindowAttrib(window_, GLFW_FOCUSED) == 0) // Skip if window is already unfocused
+        return; 
+
+    bool cursorOutOfPanel = 
+        ( gui.getMousePos().x < gui.getWindowPos().x || gui.getMousePos().x > gui.getWindowPos().x + gui.getWindowSize().x) ||
+        ( gui.getMousePos().y < gui.getWindowPos().y || gui.getMousePos().y > gui.getWindowPos().y + gui.getWindowSize().y);
+
+    if ( (glfwGetMouseButton(window_, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) && (cursorOutOfPanel) )
+        glfwIconifyWindow(window_); 
+}
