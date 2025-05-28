@@ -10,25 +10,26 @@
 class GUI
 {
 private:
-    MonitorCtrl monitorCtrl;
-    MonitorSpecs specs_;
-
+    ImVec2 panelSize = {250, 250};
     ImVec2 lastWindowPos_;
     ImVec2 lastWindowSize_;
-
     bool shouldRender_ = true;
 
+private:
+    MonitorCtrl monitorCtrl;
+    MonitorSpecs specs_;
+   
     void renderCustomTitleBar();
 
     void ControlsTab();
     void brightnessSlider();
     void contrastSlider();
+    void tempSlider();
 
     void AdvancedTab();
     void restoringOptions();
     void powerOptions();
-
-    
+ 
 public:
     GUI();
     bool shouldRender();

@@ -51,6 +51,7 @@ add_executable(MonitorCtrl
     Theme/style.cpp
 
     src/MonitorControl/MonitorCtrl.cpp
+    src/MonitorControl/Util.cpp
 
     src/GUI/GUI.cpp
     src/GUI/TitleBar.cpp

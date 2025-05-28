@@ -11,4 +11,6 @@ struct MonitorSpecs
     DWORD minContrast = 0;
     DWORD maxContrast = 100;
     DWORD curContrast = 0;
+
+    int curTemp;
 };

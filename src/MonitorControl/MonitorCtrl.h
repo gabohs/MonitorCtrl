@@ -29,6 +29,7 @@ public:
 
     void setBrightness(DWORD value);
     void setContrast(DWORD value);
+    void setColorTemperature(int value);
 
     void restoreFactoryDefaults();
     void restoreColorDefaults();

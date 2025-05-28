@@ -27,7 +27,7 @@ ImVec2 GUI::getMousePos()
 
 void GUI::render()
 {
-    ImGui::SetNextWindowSize(ImVec2(250, 200), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(panelSize, ImGuiCond_Once);
     ImGui::Begin("MonitorCtrl", nullptr, ImGuiWindowFlags_NoTitleBar);
 
     lastWindowPos_ = ImGui::GetWindowPos();
@@ -40,7 +40,7 @@ void GUI::render()
         if (ImGui::BeginTabItem("Controls"))
         {
             ControlsTab();
-            ImGui::Text("Number of monitors: %d", monitorCtrl.getMonitorCount());
+            ImGui::Text("Number of monitors: %d", monitorCtrl.getMonitorCount());   
             ImGui::EndTabItem();
         }
 
