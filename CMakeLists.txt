@@ -50,8 +50,12 @@ add_executable(MonitorCtrl
     Theme/colors.cpp
     Theme/style.cpp
 
-    src/GUI/GUI.cpp
     src/MonitorControl/MonitorCtrl.cpp
+
+    src/GUI/GUI.cpp
+    src/GUI/TitleBar.cpp
+    src/GUI/AdvancedTab.cpp
+    src/GUI/ControlsTab.cpp
 )
 
 # Link the executable with ImGui and dependencies

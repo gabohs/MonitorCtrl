@@ -4,6 +4,7 @@
 #include "../MonitorControl/MonitorSpecs.h"
 
 #include <imgui.h>
+#include "../../Theme/colors.h"
 
 
 class GUI
@@ -17,7 +18,7 @@ private:
 
     bool shouldRender_ = true;
 
-    void renderCustomCloseButton();
+    void renderCustomTitleBar();
 
     void ControlsTab();
     void brightnessSlider();
