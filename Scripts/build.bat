@@ -12,12 +12,16 @@ if exist build (
     set /p recreate_build_dir=RECREATE BUILD DIRECTORY {Y or N} 
 
     if /i "!recreate_build_dir!"=="Y" (
-        del build
+        rd /s /q build
+        echo Creating build directories...
         timeout /t 2 /nobreak >nul
-        echo Creating build directory...
-        timeout /t 3 /nobreak >nul
-        cmake -B build
-        echo Build folder created!
+        cmake -B build/Debug -DCMAKE_BUILD_TYPE=Debug
+        cmake -B build/Release -DCMAKE_BUILD_TYPE=Release
+        echo Building Debug configuration...
+        cmake --build build/Debug --config Debug
+        echo Building Release configuration...
+        cmake --build build/Release --config Release
+        echo Build folders created and built!
     ) else if /i "!recreate_build_dir!"=="N" (
         echo %GREEN%Keeping existing build directory...%RESET%
         timeout /t 2 /nobreak >nul
@@ -27,15 +31,18 @@ if exist build (
     )
 ) else (
     echo %RED%build directory not detected!%RESET%
-    timeout /t 3 /nobreak >nul
-    echo %BLUE%Creating build directory...%RESET%
-    timeout /t 3 /nobreak >nul
-    cmake -B build
-    echo Build folder created!
+    timeout /t 2 /nobreak >nul
+    echo %BLUE%Creating build directories...%RESET%
+    cmake -B build/Debug -DCMAKE_BUILD_TYPE=Debug
+    cmake -B build/Release -DCMAKE_BUILD_TYPE=Release
+    echo Building Debug configuration...
+    cmake --build build/Debug --config Debug
+    echo Building Release configuration...
+    cmake --build build/Release --config Release
+    echo Build folders created and built!
 )
 
-
 timeout /t 2 /nobreak >nul
-echo Now execute run.bat to build and start the program! 
+echo Now execute run.bat to start the program!
 
 endlocal

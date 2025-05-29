@@ -1,5 +1,4 @@
 @echo off
-
 setlocal EnableDelayedExpansion
 
 cd /d "%~dp0.."
@@ -8,19 +7,65 @@ call Scripts\utils\colors.bat
 
 cls
 
-set "path_to_main=build\bin\Debug\MonitorCtrl.exe"
+echo %BLUE%Select build configuration:%RESET%
+echo 1. Debug
+echo 2. Release
+echo 3. Build both and exit
+set /p choice=Enter choice (1, 2, or 3): 
 
-echo %BLUE%Building the project...%RESET%
-timeout /t 1 /nobreak >nul
-cmake --build build
-
-if exist "%path_to_main%" (
-    echo %GREEN%Executable found%RESET%
-    timeout /t 1 /nobreak >nul
-    echo Running main.exe...
-    timeout /t 1 /nobreak >nul
-    start cmd /k "%path_to_main%"
+if "!choice!"=="1" (
+    echo %BLUE%Building Debug configuration...%RESET%
+    cmake --build build/Debug --config Debug
+    if !errorlevel! neq 0 (
+        echo %RED%Debug build failed!%RESET%
+        exit /b 1
+    )
+    set "debug_path_to_main=build\Debug\Debug\MonitorCtrl.exe"
+    if exist "!debug_path_to_main!" (
+        echo %GREEN%Debug executable found%RESET%
+        timeout /t 1 /nobreak >nul
+        echo Running Debug executable...
+        start cmd /k "!debug_path_to_main!"
+    ) else (
+        echo %RED%Couldn't find Debug executable!%RESET%
+        echo %YELLOW%[INFO]%RESET%: Checked path: !debug_path_to_main!
+        exit /b 1
+    )
+) else if "!choice!"=="2" (
+    echo %BLUE%Building Release configuration...%RESET%
+    cmake --build build/Release --config Release
+    if !errorlevel! neq 0 (
+        echo %RED%Release build failed!%RESET%
+        exit /b 1
+    )
+    set "release_path_to_main=build\Release\Release\MonitorCtrl.exe"
+    if exist "!release_path_to_main!" (
+        echo %GREEN%Release executable found%RESET%
+        timeout /t 1 /nobreak >nul
+        echo Running Release executable...
+        start cmd /k "!release_path_to_main!"
+    ) else (
+        echo %RED%Couldn't find Release executable!%RESET%
+        echo %YELLOW%[INFO]%RESET%: Checked path: !release_path_to_main!
+        exit /b 1
+    )
+) else if "!choice!"=="3" (
+    echo %BLUE%Building Debug configuration...%RESET%
+    cmake --build build/Debug --config Debug
+    if !errorlevel! neq 0 (
+        echo %RED%Debug build failed!%RESET%
+        exit /b 1
+    )
+    echo %BLUE%Building Release configuration...%RESET%
+    cmake --build build/Release --config Release
+    if !errorlevel! neq 0 (
+        echo %RED%Release build failed!%RESET%
+        exit /b 1
+    )
+    echo %GREEN%Both configurations built successfully!%RESET%
 ) else (
-    echo %RED%Couldn't find executable!%RESET% - Check the value of the path_to_main variable in run.bat
-    echo %YELLOW%[INFO]%RESET%: Path to main is set to %path_to_main%
+    echo %RED%Invalid choice! Please enter 1, 2, or 3.%RESET%
+    exit /b 1
 )
+
+endlocal

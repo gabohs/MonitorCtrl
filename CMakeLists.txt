@@ -5,11 +5,10 @@ project(MonitorCtrl LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
 # Find OpenGL
 find_package(OpenGL REQUIRED)
 
+# Add GLFW subdirectory
 add_subdirectory(lib/glfw)
 
 # Set ImGui directory
@@ -22,8 +21,6 @@ set(IMGUI_SOURCES
     ${IMGUI_DIR}/imgui_widgets.cpp
     ${IMGUI_DIR}/imgui_tables.cpp
     ${IMGUI_DIR}/imgui_demo.cpp
-
-    
     ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
 )
@@ -49,17 +46,14 @@ add_executable(MonitorCtrl
     src/App.cpp
     Theme/colors.cpp
     Theme/style.cpp
-
     src/MonitorControl/MonitorCtrl.cpp
     src/MonitorControl/Util.cpp
-
     src/GUI/GUI.cpp
     src/GUI/TitleBar.cpp
     src/GUI/AdvancedTab.cpp
     src/GUI/ControlsTab.cpp
+    src/GUI/InfoTab.cpp
 )
 
 # Link the executable with ImGui and dependencies
-target_link_libraries(MonitorCtrl PRIVATE 
-    imgui
-)
+target_link_libraries(MonitorCtrl PRIVATE imgui)
