@@ -10,7 +10,7 @@ int main()
     App app;
     if (!app.init())
     {
-        std::cerr << "Failed to init application" << std::endl;
+        MessageBox(NULL, TEXT("Failed to Init Application!"), TEXT("Error"), MB_OK | MB_ICONERROR);
         return -1;
     }
 
