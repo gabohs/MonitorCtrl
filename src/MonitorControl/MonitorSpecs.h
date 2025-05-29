@@ -3,7 +3,10 @@
 #include <windows.h>
 
 struct MonitorSpecs
-{
+{   
+    DWORD capabilities;
+    DWORD supportedColorTemps;
+
     DWORD minBrightness = 0;
     DWORD maxBrightness = 100;
     DWORD curBrightness = 0;

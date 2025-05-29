@@ -93,6 +93,11 @@ void App::run()
     while (!glfwWindowShouldClose(window_)) 
     {
         glfwPollEvents();
+        if (glfwGetWindowAttrib(window_, GLFW_ICONIFIED) && glfwGetWindowAttrib(window_, GLFW_FOCUSED))
+        {   
+            gui.setShouldMinize(false);
+            glfwRestoreWindow(window_);
+        }
 
         // Start ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
@@ -103,7 +108,8 @@ void App::run()
         if (gui.shouldRender())
         {   
             gui.render();
-            hideIfUnfocused();
+            if (gui.shouldMinimize() || panelUnfocused()) 
+                glfwIconifyWindow(window_);  
         }
         else
         {
@@ -139,15 +145,23 @@ void App::shutdown()
     glfwTerminate();
 }
 
-void App::hideIfUnfocused()
+bool App::panelUnfocused()
 {   
-    if (!window_ || glfwGetWindowAttrib(window_, GLFW_FOCUSED) == 0) // Skip if window is already unfocused
-        return; 
+    if (!window_ || glfwGetWindowAttrib(window_, GLFW_FOCUSED) == 0) // Return false if window is already unfocused
+    {
+        return false; 
+    }    
+    else
+    {
+        const int offset = 20; // so that the gui is not accidentally closed when trying to resize the panel
 
-    bool cursorOutOfPanel = 
-        ( gui.getMousePos().x < gui.getWindowPos().x || gui.getMousePos().x > gui.getWindowPos().x + gui.getWindowSize().x) ||
-        ( gui.getMousePos().y < gui.getWindowPos().y || gui.getMousePos().y > gui.getWindowPos().y + gui.getWindowSize().y);
+        bool cursorOutOfPanel = 
+            ( (gui.getMousePos().x < (gui.getWindowPos().x - offset)) || (gui.getMousePos().x > (gui.getWindowPos().x + gui.getWindowSize().x + offset)) ) ||
+            ( (gui.getMousePos().y < (gui.getWindowPos().y - offset)) || (gui.getMousePos().y > (gui.getWindowPos().y + gui.getWindowSize().y + offset)) );
 
-    if ( (glfwGetMouseButton(window_, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) && (cursorOutOfPanel) )
-        glfwIconifyWindow(window_); 
+        if ( (glfwGetMouseButton(window_, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) && (cursorOutOfPanel) )
+            return true;
+        
+        return false;
+    }
 }

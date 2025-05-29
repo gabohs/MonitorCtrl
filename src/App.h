@@ -20,7 +20,7 @@ private:
     bool initializeGLFW();
     bool initializeImGui();
     void shutdown();
-    void hideIfUnfocused();
+    bool panelUnfocused();
 
     GUI gui;
 

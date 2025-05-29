@@ -3,7 +3,13 @@
 MonitorCtrl::MonitorCtrl()
 {
     hMonitor_ = MonitorFromWindow(GetDesktopWindow(), MONITOR_DEFAULTTOPRIMARY);
-    GetNumberOfPhysicalMonitorsFromHMONITOR(hMonitor_, &monitorCount_);
+    BOOL monitorFound = GetNumberOfPhysicalMonitorsFromHMONITOR(hMonitor_, &monitorCount_);
+    if (!monitorFound)
+    {
+        MessageBox(NULL, TEXT("No physical monitors found."), TEXT("Error"), MB_OK | MB_ICONERROR);
+        return;
+    }
+
     pMons_ = new PHYSICAL_MONITOR[monitorCount_];
 
     getMonitorInfo();
@@ -22,6 +28,8 @@ void MonitorCtrl::getMonitorInfo()
         GetMonitorBrightness(pMons_[0].hPhysicalMonitor, &specs_.minBrightness, &specs_.curBrightness, &specs_.maxBrightness);
         GetMonitorContrast(pMons_[0].hPhysicalMonitor, &specs_.minContrast, &specs_.curContrast, &specs_.maxContrast);  
         GetMonitorColorTemperature(pMons_[0].hPhysicalMonitor, (LPMC_COLOR_TEMPERATURE)&specs_.curTemp); 
+
+        getMonitorCapabilities();
     }
     else
     {
@@ -34,12 +42,22 @@ DWORD MonitorCtrl::getMonitorCount()
     return monitorCount_;
 }
 
+void MonitorCtrl::getMonitorCapabilities()
+{
+    BOOL result = GetMonitorCapabilities(pMons_[0].hPhysicalMonitor, &specs_.capabilities, &specs_.supportedColorTemps);
+    if (!result) 
+    {
+        DWORD error = GetLastError();
+        printf("GetMonitorCapabilities failed: %lu\n", error);
+    }
+}
+
 void MonitorCtrl::setBrightness(DWORD value)
 { 
     BOOL result = SetMonitorBrightness(pMons_[0].hPhysicalMonitor, value);
     if (!result) 
     {
-        MessageBox(NULL, TEXT("Failed to set contrast."), TEXT("Error"), MB_OK | MB_ICONERROR);
+        MessageBox(NULL, TEXT("Failed to set brightness."), TEXT("Error"), MB_OK | MB_ICONERROR);
     }
     else
     {

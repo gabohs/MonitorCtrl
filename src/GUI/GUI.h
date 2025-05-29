@@ -6,14 +6,16 @@
 #include <imgui.h>
 #include "../../Theme/colors.h"
 
+#include "../MonitorControl/Util.h"
 
 class GUI
 {
 private:
-    ImVec2 panelSize = {250, 250};
+    ImVec2 panelSize = {400, 400};
     ImVec2 lastWindowPos_;
     ImVec2 lastWindowSize_;
     bool shouldRender_ = true;
+    bool shouldMinimize_ = false;
 
 private:
     MonitorCtrl monitorCtrl;
@@ -29,10 +31,16 @@ private:
     void AdvancedTab();
     void restoringOptions();
     void powerOptions();
+
+    void InfoTab();
+    void monitorCapabilitiesTable();
+    void supColorTempsTable();
  
 public:
     GUI();
     bool shouldRender();
+    bool shouldMinimize();
+    void setShouldMinize(bool value);
 
     ImVec2 getWindowPos();
     ImVec2 getWindowSize();

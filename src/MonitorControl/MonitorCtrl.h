@@ -26,7 +26,9 @@ public:
 
     void getMonitorInfo();
     DWORD getMonitorCount();
+    void getMonitorCapabilities();
 
+    // functions that are called on the GUI code:
     void setBrightness(DWORD value);
     void setContrast(DWORD value);
     void setColorTemperature(int value);

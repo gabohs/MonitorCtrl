@@ -10,6 +10,16 @@ bool GUI::shouldRender()
     return shouldRender_;
 }
 
+bool GUI::shouldMinimize()
+{
+    return shouldMinimize_;
+}
+
+void GUI::setShouldMinize(bool value)
+{
+    shouldMinimize_ = value;
+}
+
 ImVec2 GUI::getWindowPos()
 {   
     return lastWindowPos_;
@@ -47,6 +57,12 @@ void GUI::render()
         if (ImGui::BeginTabItem("Advanced"))
         {
             AdvancedTab();
+            ImGui::EndTabItem();
+        }
+
+        if (ImGui::BeginTabItem("Info"))
+        {
+            InfoTab();
             ImGui::EndTabItem();
         }
 

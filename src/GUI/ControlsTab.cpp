@@ -1,7 +1,5 @@
 #include "GUI.h"
 
-#include "../MonitorControl/Util.h"
-
 void GUI::brightnessSlider()
 {   
     static int brightnessVal = specs_.curBrightness; 

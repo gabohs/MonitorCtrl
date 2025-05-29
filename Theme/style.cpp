@@ -10,7 +10,7 @@ namespace setStyle
         style.FrameRounding  = 4.f;
         style.GrabRounding   = 10.f;
         style.PopupRounding  = 4.f;
-        style.ScrollbarSize = 14.0f;
+        style.ScrollbarSize  = 10.f;
         
         style.Colors[ImGuiCol_WindowBg]             = Colors::winBg;
         style.Colors[ImGuiCol_TitleBg]              = Colors::TitleBar;
@@ -27,9 +27,10 @@ namespace setStyle
 
         style.Colors[ImGuiCol_PopupBg]              = Colors::DarkGray;
 
-        style.Colors[ImGuiCol_ScrollbarBg]          = Colors::DarkGray;
+        style.Colors[ImGuiCol_ScrollbarBg]          = Colors::Transparent;
         style.Colors[ImGuiCol_ScrollbarGrab]        = Colors::Gray;
         style.Colors[ImGuiCol_ScrollbarGrabHovered] = Colors::Orange;
+        style.Colors[ImGuiCol_ScrollbarGrabActive]  = Colors::LightOrange;
 
         style.Colors[ImGuiCol_SliderGrab]           = Colors::Orange;
         style.Colors[ImGuiCol_SliderGrabActive]     = Colors::BrightRed;
