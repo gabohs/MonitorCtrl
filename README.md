@@ -2,7 +2,7 @@
 
 ### Simple app that lets you change monitor settings like brightness and contrast easily
 
-![App image](Screenshots/image.png)
+![App image](Screenshots/v2.png)
 
 # Build
 
