@@ -30,11 +30,13 @@ private:
 
     void AdvancedTab();
     void restoringOptions();
+    void utilityOptions();
     void powerOptions();
 
     void InfoTab();
     void monitorCapabilitiesTable();
     void supColorTempsTable();
+    void techInfoTable();
  
 public:
     GUI();

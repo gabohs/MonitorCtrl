@@ -39,5 +39,7 @@ public:
     void turnOn();
     void turnOff();
 
+    bool degauss();
+
     MonitorSpecs& getSpecs();
 };

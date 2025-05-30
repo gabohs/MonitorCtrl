@@ -33,7 +33,7 @@ void GUI::monitorCapabilitiesTable()
 
         for (auto& [label, flag] : capabilitiesMap)
         {
-            util::displayInfoAsTable(specs_.capabilities, label, flag);
+            util::displayBitmaskInfoAsTable(specs_.capabilities, label, flag);
         }
 
         ImGui::EndTable();
@@ -59,7 +59,25 @@ void GUI::supColorTempsTable()
         {   
             // the 1st element of the _MC_COLOR_TEMPERATURE enum is "Unknown"; thus we start the loop at 1 and end at index 8, 
             // the last valid color in the enum
-            util::displayInfoAsTable(specs_.supportedColorTemps, util::colorTempToStr(i), (_MC_COLOR_TEMPERATURE)i);
+            util::displayBitmaskInfoAsTable(specs_.supportedColorTemps, util::colorTempToStr(i), (_MC_COLOR_TEMPERATURE)i);
+        }
+
+        ImGui::EndTable();
+    }
+}
+
+void GUI::techInfoTable()
+{
+    ImGui::TextColored(Colors::Purple, "Monitor Tech:");
+
+    if (ImGui::BeginTable("TechTable", 2, ImGuiTableFlags_Borders))
+    {
+        ImGui::TableSetupColumn("Tech:");
+        ImGui::TableSetupColumn("Supported");
+
+        for (int i = 0; i < 9; i++)
+        {
+            util::displayBitmaskInfoAsTable(specs_.tech, util::techTypeToStr(i), (MC_DISPLAY_TECHNOLOGY_TYPE)i);
         }
 
         ImGui::EndTable();
@@ -70,6 +88,7 @@ void GUI::InfoTab()
 {   
     monitorCapabilitiesTable();
     supColorTempsTable();
+    techInfoTable();
 }
 
 

@@ -7,6 +7,8 @@ struct MonitorSpecs
     DWORD capabilities;
     DWORD supportedColorTemps;
 
+    DWORD tech;
+
     DWORD minBrightness = 0;
     DWORD maxBrightness = 100;
     DWORD curBrightness = 0;

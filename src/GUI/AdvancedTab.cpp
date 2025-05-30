@@ -28,6 +28,42 @@ void GUI::restoringOptions()
     ImGui::PopStyleColor();
 }
 
+void GUI::utilityOptions()
+{   
+    ImGui::Dummy(ImVec2(0.0f, 3.0f));
+    ImGui::Text("Utility Options:");
+    ImGui::Separator();
+
+    if (ImGui::Button("Degauss"))
+    {
+        if (monitorCtrl.degauss())   
+            ImGui::OpenPopup("Monitor Degauss");
+            
+        else 
+            MessageBox(NULL, TEXT("Failed to degauss monitor."), TEXT("Error"), MB_OK | MB_ICONERROR);         
+    }
+
+    if (ImGui::BeginPopup("Monitor Degauss"))
+    {
+        ImGui::Text("Monitor Degaussed successfully ");
+
+        ImGui::PushStyleColor(ImGuiCol_Button, Colors::Red);
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, Colors::BrightRed);
+        ImGui::PushStyleColor(ImGuiCol_Text, Colors::DarkGray);
+
+        if (ImGui::SmallButton("Close")) 
+        {
+            ImGui::CloseCurrentPopup();
+        }
+
+        ImGui::PopStyleColor();
+        ImGui::PopStyleColor();
+        ImGui::PopStyleColor();
+
+        ImGui::EndPopup();
+    }
+}
+
 void GUI::powerOptions()
 {   
     ImGui::Dummy(ImVec2(0.0f, 3.0f));
@@ -60,5 +96,6 @@ void GUI::powerOptions()
 void GUI::AdvancedTab()
 {   
     restoringOptions();
+    utilityOptions();
     powerOptions();
 }

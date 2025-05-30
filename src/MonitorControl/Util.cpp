@@ -56,7 +56,77 @@ namespace util
             }
         }
     }
+
+    const char* techTypeToStr(int value)
+    {
+        switch ((MC_DISPLAY_TECHNOLOGY_TYPE)value)
+        {
+            case MC_SHADOW_MASK_CATHODE_RAY_TUBE:
+            {
+                return "Shadow Mask CRT";
+            } break;
+
+            case MC_APERTURE_GRILL_CATHODE_RAY_TUBE:
+            {
+                return "Aperture Grill CRT";
+            } break;
+
+            case MC_THIN_FILM_TRANSISTOR:
+            {
+                return "TFT (Thin-Film Transistor)";
+            } break;
+
+            case MC_LIQUID_CRYSTAL_ON_SILICON:
+            {
+                return "LCoS (Liquid Crystal on Silicon)";
+            } break;
+
+            case MC_PLASMA:
+            {
+                return "Plasma";
+            } break;
+
+            case MC_ORGANIC_LIGHT_EMITTING_DIODE:
+            {
+                return "OLED";
+            } break;
+
+            case MC_ELECTROLUMINESCENT:
+            {
+                return "Electroluminescent";
+            } break;
+
+            case MC_MICROELECTROMECHANICAL:
+            {
+                return "MEMS (Microelectromechanical)";
+            } break;
+
+            case MC_FIELD_EMISSION_DEVICE:
+            {
+                return "Field Emission Display";
+            } break;
+
+            default:
+            {
+                return "Unknown";
+            }
+        }
+    }
+
     void displayInfoAsTable(DWORD info, const char *label, DWORD flag)
+    {
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(0);
+        ImGui::Text("%s", label);
+        ImGui::TableSetColumnIndex(1);
+
+        if (info == flag)
+            ImGui::TextColored(Colors::Green, "YES");
+        else
+            ImGui::TextColored(Colors::BrightRed, "NO");
+    }
+
+    void displayBitmaskInfoAsTable(DWORD info, const char *label, DWORD flag)
     {
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);

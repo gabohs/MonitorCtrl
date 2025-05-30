@@ -28,6 +28,7 @@ void MonitorCtrl::getMonitorInfo()
         GetMonitorBrightness(pMons_[0].hPhysicalMonitor, &specs_.minBrightness, &specs_.curBrightness, &specs_.maxBrightness);
         GetMonitorContrast(pMons_[0].hPhysicalMonitor, &specs_.minContrast, &specs_.curContrast, &specs_.maxContrast);  
         GetMonitorColorTemperature(pMons_[0].hPhysicalMonitor, (LPMC_COLOR_TEMPERATURE)&specs_.curTemp); 
+        GetMonitorTechnologyType(pMons_[0].hPhysicalMonitor, (LPMC_DISPLAY_TECHNOLOGY_TYPE)&specs_.tech);
 
         getMonitorCapabilities();
     }
@@ -91,7 +92,7 @@ void MonitorCtrl::setColorTemperature(int value)
         specs_.curTemp = value; 
         // value is stored on the MonitorSpecs struct as an integer, from 1 to 8, corresponding to the equivalent index 
         // of the _MC_COLOR_TEMPERATURE enum element 
-    }
+    } 
 }
 
 void MonitorCtrl::restoreFactoryDefaults()
@@ -112,6 +113,13 @@ void MonitorCtrl::turnOn()
 void MonitorCtrl::turnOff()
 {
     SendMessage(HWND_BROADCAST, WM_SYSCOMMAND, SC_MONITORPOWER, (LPARAM)2);
+}
+
+bool MonitorCtrl::degauss()
+{
+    BOOL result = DegaussMonitor(pMons_[0].hPhysicalMonitor);
+    
+    return result;
 }
 
 MonitorSpecs &MonitorCtrl::getSpecs()
