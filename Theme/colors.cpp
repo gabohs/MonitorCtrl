@@ -16,5 +16,6 @@ ImVec4 Colors::Gray        = ImVec4(146.f / 255.f, 131.f / 255.f, 116.f / 255.f,
 ImVec4 Colors::DarkGray    = ImVec4(50.f / 255.f, 48.f / 255.f, 47.f / 255.f, 1.f);   
 ImVec4 Colors::Purple      = ImVec4(211.f / 255.f, 134.f / 255.f, 155.f / 255.f, 1.f);
 ImVec4 Colors::Yellow      = ImVec4(250.f / 255.f, 189.f / 255.f, 47.f  / 255.f, 1.f);
+ImVec4 Colors::DarkYellow  = ImVec4(204.f / 255.f, 153.f / 255.f, 30.f / 255.f, 1.f);
 
 ImVec4 Colors::Transparent = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);

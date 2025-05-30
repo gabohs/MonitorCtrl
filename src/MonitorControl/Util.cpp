@@ -7,7 +7,7 @@
 namespace util
 {
     const char* colorTempToStr(int value)
-    {
+    {   
         switch ((_MC_COLOR_TEMPERATURE)value)
         {
             case MC_COLOR_TEMPERATURE_4000K:
@@ -114,13 +114,15 @@ namespace util
     }
 
     void displayInfoAsTable(DWORD info, const char *label, DWORD flag)
-    {
+    {   
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);
         ImGui::Text("%s", label);
         ImGui::TableSetColumnIndex(1);
 
-        if (info == flag)
+        if (info == MONITOR_VALUE_ERROR)
+            ImGui::TextColored(Colors::DarkYellow, "Unavailable");
+        else if (info == flag)
             ImGui::TextColored(Colors::Green, "YES");
         else
             ImGui::TextColored(Colors::BrightRed, "NO");
@@ -133,7 +135,9 @@ namespace util
         ImGui::Text("%s", label);
         ImGui::TableSetColumnIndex(1);
 
-        if (info & flag)
+        if (info == MONITOR_VALUE_ERROR)
+            ImGui::TextColored(Colors::DarkYellow, "Unavailable");
+        else if (info & flag)
             ImGui::TextColored(Colors::Green, "YES");
         else
             ImGui::TextColored(Colors::BrightRed, "NO");

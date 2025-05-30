@@ -2,6 +2,8 @@
 
 #include <windows.h>
 
+#define MONITOR_VALUE_ERROR 0xFFFFFFFF
+
 struct MonitorSpecs
 {   
     DWORD capabilities;

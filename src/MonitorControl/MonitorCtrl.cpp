@@ -19,16 +19,23 @@ MonitorCtrl::~MonitorCtrl()
 {   
     DestroyPhysicalMonitors(monitorCount_, pMons_); 
     delete[] pMons_;
-}
+} 
 
-void MonitorCtrl::getMonitorInfo()
-{
+void MonitorCtrl::getMonitorInfo() 
+{ 
     if (GetPhysicalMonitorsFromHMONITOR(hMonitor_, monitorCount_, pMons_)) 
     {
-        GetMonitorBrightness(pMons_[0].hPhysicalMonitor, &specs_.minBrightness, &specs_.curBrightness, &specs_.maxBrightness);
-        GetMonitorContrast(pMons_[0].hPhysicalMonitor, &specs_.minContrast, &specs_.curContrast, &specs_.maxContrast);  
-        GetMonitorColorTemperature(pMons_[0].hPhysicalMonitor, (LPMC_COLOR_TEMPERATURE)&specs_.curTemp); 
-        GetMonitorTechnologyType(pMons_[0].hPhysicalMonitor, (LPMC_DISPLAY_TECHNOLOGY_TYPE)&specs_.tech);
+        if (!GetMonitorBrightness(pMons_[0].hPhysicalMonitor, &specs_.minBrightness, &specs_.curBrightness, &specs_.maxBrightness))
+            specs_.curBrightness = MONITOR_VALUE_ERROR;
+
+        if (!GetMonitorContrast(pMons_[0].hPhysicalMonitor, &specs_.minContrast, &specs_.curContrast, &specs_.maxContrast))
+            specs_.curContrast = MONITOR_VALUE_ERROR;
+
+        if (!GetMonitorColorTemperature(pMons_[0].hPhysicalMonitor, (LPMC_COLOR_TEMPERATURE)&specs_.curTemp))
+            specs_.curTemp = MONITOR_VALUE_ERROR;
+
+        if (!GetMonitorTechnologyType(pMons_[0].hPhysicalMonitor, (LPMC_DISPLAY_TECHNOLOGY_TYPE)&specs_.tech))
+            specs_.curTemp = MONITOR_VALUE_ERROR;
 
         getMonitorCapabilities();
     }
@@ -48,8 +55,8 @@ void MonitorCtrl::getMonitorCapabilities()
     BOOL result = GetMonitorCapabilities(pMons_[0].hPhysicalMonitor, &specs_.capabilities, &specs_.supportedColorTemps);
     if (!result) 
     {
-        DWORD error = GetLastError();
-        printf("GetMonitorCapabilities failed: %lu\n", error);
+        specs_.capabilities = MONITOR_VALUE_ERROR;
+        specs_.supportedColorTemps = MONITOR_VALUE_ERROR;
     }
 }
 
@@ -62,7 +69,7 @@ void MonitorCtrl::setBrightness(DWORD value)
     }
     else
     {
-        specs_.curContrast = value;
+        specs_.curBrightness = value;
         
     }
 }

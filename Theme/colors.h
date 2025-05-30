@@ -20,6 +20,7 @@ struct Colors
     static ImVec4 DarkGray;
     static ImVec4 Purple;
     static ImVec4 Yellow;
+    static ImVec4 DarkYellow;
 
     static ImVec4 Transparent;
 };
